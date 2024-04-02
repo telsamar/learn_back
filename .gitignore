@@ -1,0 +1,4 @@
+.DS_Store
+/redux/client/public
+/template_site/client/node_modules
+/template_site/server/node_modules
