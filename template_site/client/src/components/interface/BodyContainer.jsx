@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 
 
 import { 
-    API_getText_min, 
-    API_insertText_min, 
+    API_getText, 
+    API_insertText, 
 } from 'path_services/api';
 
 
 function BodyContainer (props) {
 
     const handlerClick = () => {
-        API_getText_min()
+        API_getText()
     }
 
 
@@ -41,7 +41,7 @@ function BodyContainer (props) {
 
                     <button
                         className='btn btn-success'
-                        onClick={() => {API_insertText_min('По клику вызвана функция')}}
+                        onClick={() => {API_insertText('По клику вызвана функция API_insertText')}}
                     >
                         Отправить текст
                     </button>

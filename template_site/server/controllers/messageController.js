@@ -29,7 +29,7 @@ exports.cntr_message = async function(req, res) {
     const action = req.body.action;
     switch (action) {
         // case 'get': {
-        //     return getText(res)
+            // return getText(res)
         // }
         
         // case 'insert':

@@ -2,7 +2,6 @@ import {
     SET_TEXT, 
 } from './actions'
 
-
 const defaultState = {
     mytext: 'Текст из state. Приступил к изменению сайта',
     messages: []
@@ -15,11 +14,6 @@ export const dataReducer = (state = defaultState, action) => {
                 ...state,
                 mytext: action.payload
             }
-
-            
         default: return state
     }
 }
-    
-    
-    
