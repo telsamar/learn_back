@@ -1,14 +1,11 @@
-import { SET_TEXT, } from './actions'
+import { 
+    SET_TEXT, 
+} from './actions'
 
 
 const defaultState = {
-    mytext: 'text from state',
-    messages: [
-        // {
-        //     id: 1,
-        //     message: 'dmkdkfjkld'
-        // }
-    ]
+    mytext: 'Текст из state. Приступил к изменению сайта',
+    messages: []
 }
 
 export const dataReducer = (state = defaultState, action) => {

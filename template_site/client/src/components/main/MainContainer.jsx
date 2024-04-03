@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
 //reducers
 const mapDispatchToProps = (dispatch) => {
     return {
-        // setFoo: (foo) => dispatch(act_setFoo(foo)),
+
     }
 }
 

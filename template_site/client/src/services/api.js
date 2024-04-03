@@ -1,7 +1,5 @@
 import store from 'path_store/store'
-
 import { act_setText, } from 'path_store/data/actions';
-
 
 const options = {
     method: 'POST',
@@ -10,8 +8,7 @@ const options = {
     },
     mode: 'cors', 
 };
-       
-
+    
 
 export const commonAPI = (api, action, body={}, dispatcher=null, api_request=null) => {
     fetch('http://localhost:3030/api/'+api, 
@@ -64,6 +61,7 @@ export const API_getText = () => {
     })
     .catch(error => console.error(error));
 }
+
 
 
 

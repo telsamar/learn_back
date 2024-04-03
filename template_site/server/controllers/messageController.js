@@ -8,19 +8,21 @@ let arrMessages = [
     {id:7, message: 'message 7'},
     {id:8, message: 'message 8'},
     {id:9, message: 'message 9'},
-]
+];
+
+// getMessages
 
 
-//getMessages
+// insertMessage
 
-//insertMessage
 
-//updateMessage
+// updateMessage
 
-//deleteMessage
+
+// deleteMessage
+
 
 // getMessageForId
-
 
 
 exports.cntr_message = async function(req, res) {
@@ -29,8 +31,17 @@ exports.cntr_message = async function(req, res) {
         // case 'get': {
         //     return getText(res)
         // }
+        
+        // case 'insert':
+        //     return insertMessage(req, res);
+        // case 'update':
+        //     return updateMessage(req, res);
+        // case 'delete':
+        //     return deleteMessage(req, res);
+        // case 'getMessageForId':
+        //     return getMessageForId(req, res);
 
-
-        default: return res.status(400).json({error: 'action not found'})
+        default:
+            return res.status(400).json({ error: 'action not found' });
     }
-}
+};

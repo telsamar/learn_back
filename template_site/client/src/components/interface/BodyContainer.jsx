@@ -1,41 +1,55 @@
-import { connect } from 'react-redux'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-import { API_getText, 
-         API_insertText, } from 'path_services/api';
+
+import { 
+    API_getText_min, 
+    API_insertText_min, 
+} from 'path_services/api';
 
 
 function BodyContainer (props) {
 
     const handlerClick = () => {
-        API_getText()
+        API_getText_min()
     }
+
 
     return (
         <div className="d-flex flex-column w-100 h-100 justify-content-center align-items-center">
-            {/* Вывести кликабельный список id messages */}
-            {/* Данные загружаются при запуске клиента */}
-            {/* Если сервер не загружен, то надпись о его недоступности и кнопка Загрузить */}
-            {/* При клике на id в отдельном компонента отображается текст сообщения */}
-            {/* Сделать кнопки добавления удаления редактирования сообщений */}
+            <div>
+                {/* Вывести кликабельный список id messages */}
+                {/* Данные загружаются при запуске клиента */}
 
-            <button
-                className='btn btn-success'
-                onClick={handlerClick}
-            >
-                Получить текст
-            </button>
+                {/* Если сервер не загружен, то надпись о его недоступности и кнопка Загрузить */}
+
+                {/* При клике на id в отдельном компонента отображается текст сообщения */}
+                
+                {/* Сделать кнопки добавления удаления редактирования сообщений */}
+            </div>
+            
             
 
-            <button
-                className='btn btn-success'
-                onClick={() => {API_insertText('tratata')}}
-            >
-                Отправить текст
-            </button>
-            
+            <div className="fixed-bottom mb-2">
+                <div className="d-flex justify-content-around">
+                    <button
+                        className='btn btn-success'
+                        onClick={handlerClick}
+                    >
+                        Получить текст
+                    </button>
 
-
-            <h1>{props.mytext}</h1>    
+                    <button
+                        className='btn btn-success'
+                        onClick={() => {API_insertText_min('По клику вызвана функция')}}
+                    >
+                        Отправить текст
+                    </button>
+                </div>
+                
+                <h1 className="text-center">{props.mytext}</h1>  
+            </div>
+                  
         </div>
     );
 }
