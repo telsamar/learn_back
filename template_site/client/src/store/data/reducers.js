@@ -5,7 +5,9 @@ import {
 
 const defaultState = {
     mytext: 'Текст из state. Приступил к изменению сайта',
-    messages: []
+    messages: [],
+    current_id: -1,
+    current_message: null,
 }
 
 export const dataReducer = (state = defaultState, action) => {

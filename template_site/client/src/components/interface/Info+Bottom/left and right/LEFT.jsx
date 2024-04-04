@@ -5,19 +5,17 @@ import {
     API_getMessages,
 } from 'path_services/api';
 
-function Info (props) {
+function LEFT (props) {
     useEffect(() => {
         API_getMessages();
     }, []);
     
     const handlerClick = (id) => {
         console.log(`Message with ID ${id} was clicked.`);
-        //  логика для отображения деталей сообщения
     }
     
     return (
         <div>
-            <div>
                 {(!props.messages || props.messages.length === 0) ? (
                     <div style={{ textAlign: 'center' }}>
                         <p>Сервер недоступен</p>
@@ -44,22 +42,9 @@ function Info (props) {
                         </button>
                     ))
                 )}
-            </div>
-
-            
         </div>
-
-        
-
-                // {/* +++ Вывести кликабельный список id messages */}
-                // {/* +++ Данные загружаются при запуске клиента */}
-
-                // {/* +++ Если сервер не загружен, то надпись о его недоступности и кнопка Загрузить */}
-
-                // {/* (?) При клике на id в отдельном компонента отображается текст сообщения */}
-                
-                // {/* (-) Сделать кнопки добавления удаления редактирования сообщений */}
     )
+
 }
 
 //props
@@ -77,4 +62,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Info); 
+export default connect(mapStateToProps, mapDispatchToProps)(LEFT); 
