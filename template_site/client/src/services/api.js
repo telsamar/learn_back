@@ -13,7 +13,7 @@ const options = {
 };
     
 
-export const commonAPI = (api, action, body = {}, dispatcher = null, api_request = null) => {
+export const commonAPI = (api, action, body = {}, dispatcher = null, api_request = null, successData = false) => {
     fetch(`http://localhost:3030/api/${api}`, {
         ...options,
         body: JSON.stringify({ action, ...body })
@@ -22,7 +22,8 @@ export const commonAPI = (api, action, body = {}, dispatcher = null, api_request
     .then(data => {
         console.log('Получены данные от сервера (отработка api.js)', data);
         if (dispatcher) {
-            store.dispatch(dispatcher(data));
+            const dispatchData = successData ? data.success : data;
+            store.dispatch(dispatcher(dispatchData));
         }
         if (api_request) {
             api_request();
@@ -31,17 +32,19 @@ export const commonAPI = (api, action, body = {}, dispatcher = null, api_request
     .catch(error => console.error('API error:', error));
 }
 
+
 export const API_getText = () => {
-    commonAPI('text', 'get', {}, act_setText);
+    commonAPI('text', 'get', {}, act_setText, null, true);
 }
 
 export const API_insertText = (text) => {
-    commonAPI('text', 'insert', { text }, null, API_getText);
+    commonAPI('text', 'insert', { text }, null, API_getText, true);
 }
 
 export const API_getMessages = () => {
-    commonAPI('message', 'getMessages', {}, act_setMessages, null);
+    commonAPI('message', 'getMessages', {}, act_setMessages);
 }
+
 
 // export const API_getText = () => {
 //     fetch('http://localhost:3030/api/text', 
