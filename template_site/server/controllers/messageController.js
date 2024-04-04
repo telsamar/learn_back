@@ -11,36 +11,44 @@ let arrMessages = [
 ];
 
 // getMessages
+const getMessages = async (req, res) => {
+    res.status(200).json(arrMessages);
+};
 
 
 // insertMessage
+const insertMessage = async (req, res) => {
 
+};
 
 // updateMessage
+const updateMessage = async (req, res) => {
 
+};
 
 // deleteMessage
+const deleteMessage = async (req, res) => {
 
+};
 
 // getMessageForId
+const getMessageForId = async (req, res) => {
 
+};
 
 exports.cntr_message = async function(req, res) {
     const action = req.body.action;
     switch (action) {
-        // case 'get': {
-            // return getText(res)
-        // }
-        
-        // case 'insert':
-        //     return insertMessage(req, res);
-        // case 'update':
-        //     return updateMessage(req, res);
-        // case 'delete':
-        //     return deleteMessage(req, res);
-        // case 'getMessageForId':
-        //     return getMessageForId(req, res);
-
+        case 'getMessages':
+            return getMessages(req, res);
+        case 'insertMessage':
+            return insertMessage(req, res);
+        case 'updateMessage':
+            return updateMessage(req, res);
+        case 'deleteMessage':
+            return deleteMessage(req, res);
+        case 'getMessageForId':
+            return getMessageForId(req, res);
         default:
             return res.status(400).json({ error: 'action not found' });
     }

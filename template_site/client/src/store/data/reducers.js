@@ -1,5 +1,6 @@
 import { 
     SET_TEXT, 
+    SET_MESSAGES,
 } from './actions'
 
 const defaultState = {
@@ -13,7 +14,13 @@ export const dataReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 mytext: action.payload
-            }
+            };
+        case SET_MESSAGES:
+            // console.log('Данные в SET_MESSAGES:', action.payload);
+            return {
+                ...state,
+                messages: action.payload
+            };
         default: return state
     }
 }
