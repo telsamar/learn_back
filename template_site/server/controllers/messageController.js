@@ -1,20 +1,19 @@
 let arrMessages = [
     {id:1, message: 'message 1'},
-    {id:2, message: 'message 2'},
-    {id:3, message: 'message 3'},
-    {id:4, message: 'message 4'},
-    {id:5, message: 'message 5'},
-    {id:6, message: 'message 6'},
-    {id:7, message: 'message 7'},
-    {id:8, message: 'message 8'},
-    {id:9, message: 'message 9'},
+    {id:2, message: 'message 22'},
+    {id:3, message: 'message 333'},
+    {id:4, message: 'message 4444'},
+    {id:5, message: 'message 55555'},
+    {id:6, message: 'message 666666'},
+    {id:7, message: 'message 7777777'},
+    {id:8, message: 'message 88888888'},
+    {id:9, message: 'message 999999999'},
 ];
 
 // getMessages
 const getMessages = async (req, res) => {
     res.status(200).json(arrMessages);
 };
-
 
 // insertMessage
 const insertMessage = async (req, res) => {
@@ -28,7 +27,6 @@ const insertMessage = async (req, res) => {
     res.status(201).json(newMessage);
 };
 
-
 // updateMessage
 const updateMessage = async (req, res) => {
     const { id, message } = req.body;
@@ -41,19 +39,17 @@ const updateMessage = async (req, res) => {
     }
 };
 
-
 // deleteMessage
 const deleteMessage = async (req, res) => {
     const { id } = req.body;
-    const messageIndex = arrMessages.findIndex(msg => msg.id === id);
+    const messageIndex = arrMessages.findIndex(msg => msg.id === parseInt(id, 10));
     if (messageIndex > -1) {
         arrMessages.splice(messageIndex, 1);
-        res.status(200).json({ message: 'Сообщение удалено' });
+        res.status(200).json({ message: 'Сообщение удалено', id });
     } else {
         res.status(404).json({ error: 'Сообщение не найдено' });
     }
 };
-
 
 // getMessageForId
 const getMessageForId = async (req, res) => {

@@ -1,7 +1,11 @@
 import store from 'path_store/store'
 import {
     act_setText,
-    act_setMessages
+    act_setMessages,
+    act_setMessageById,
+    act_insertMessage,
+    act_updateMessage,
+    act_deleteMessage
  } from 'path_store/data/actions';
 
 const options = {
@@ -20,7 +24,8 @@ export const commonAPI = (api, action, body = {}, dispatcher = null, api_request
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Получены данные от сервера (отработка api.js)', data);
+        console.log('data от сервера (отработка api.js)', data);
+        console.log('data.success от сервера (отработка api.js)', data.success);
         if (dispatcher) {
             const dispatchData = successData ? data.success : data;
             store.dispatch(dispatcher(dispatchData));
@@ -44,6 +49,24 @@ export const API_insertText = (text) => {
 export const API_getMessages = () => {
     commonAPI('message', 'getMessages', {}, act_setMessages);
 }
+
+export const API_getMessageForId = (id) => {
+    commonAPI('message', 'getMessageForId', { id }, act_setMessageById);
+}
+
+export const API_insertMessage = (message) => {
+    commonAPI('message', 'insertMessage', { message }, act_insertMessage);
+}
+
+export const API_updateMessage = (id, message) => {
+    commonAPI('message', 'updateMessage', { id, message }, act_updateMessage);
+}
+
+export const API_deleteMessage = (id) => {
+    commonAPI('message', 'deleteMessage', { id }, act_deleteMessage);
+};
+
+
 
 
 // export const API_getText = () => {
