@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { API_deleteMessage, API_insertMessage, API_updateMessage } from 'path_services/api';
+// import { act_openInsertModal, act_closeInsertModal, act_openEditModal, act_closeEditModal } from 'path_store/interface/actions';
 
 function RIGHT(props) {
     // insert
@@ -111,15 +112,24 @@ const mapStateToProps = (state) => {
         current_message: state.allData.current_message,
         current_id: state.allData.current_id,
         messages: state.allData.messages,
+        
+        // insertModalOpen: state.allInterface.insertModalOpen,
+        // editModalOpen: state.allInterface.editModalOpen,
+        // editingId: state.allInterface.editingId,
+        // editingMessage: state.allInterface.editingMessage
     }
 }
 
 //reducers
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        // openInsertModal: () => dispatch(openInsertModal()),
+        // closeInsertModal: () => dispatch(closeInsertModal()),
+        // openEditModal: (id, message) => dispatch(openEditModal(id, message)),
+        // closeEditModal: () => dispatch(closeEditModal())
     }
 };
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(RIGHT); 
