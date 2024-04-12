@@ -22,34 +22,33 @@ export const dataReducer = (state = defaultState, action) => {
                 mytext: action.payload
             };
         case SET_MESSAGES:
-            // console.log('Данные в SET_MESSAGES:', action.payload);
             return {
                 ...state,
                 messages: action.payload
             };
         case SET_CURRENT_MESSAGE:
-            const { payload: message } = action;
             return {
                 ...state,
-                current_id: message.id,
-                current_message: message.message,
+                current_id: action.payload.id,
+                current_message: action.payload.message,
             };
         case INSERT_MESSAGE:
-            console.log('Данные в SET_MESSAGES:', action.payload);
             return {
                 ...state,
                 messages: [...state.messages, action.payload],
             };
         case UPDATE_MESSAGE:
-            const updatedMessages = state.messages.map(msg =>
-                msg.id === action.payload.id ? { ...msg, message: action.payload.message } : msg
-            );
             return {
                 ...state,
-                messages: updatedMessages,
+                messages: state.messages.map(msg =>
+                    msg.id === action.payload.id ? { ...msg, message: action.payload.message } : msg
+                ),
+                current_message: state.messages.find(msg => msg.id === action.payload.id)
+                        ? action.payload.message
+                        : state.current_message
             };
+
         case DELETE_MESSAGE:
-            // console.log('Данные в DELETE_MESSAGE:', action.payload);
             return {
                 ...state,
                 messages: state.messages.filter(msg => msg.id !== action.payload.id),

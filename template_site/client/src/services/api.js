@@ -17,18 +17,15 @@ const options = {
 };
     
 
-export const commonAPI = (api, action, body = {}, dispatcher = null, api_request = null, successData = false) => {
+export const commonAPI = (api, action, body = {}, dispatcher = null, api_request = null) => {
     fetch(`http://localhost:3030/api/${api}`, {
         ...options,
         body: JSON.stringify({ action, ...body })
     })
     .then(response => response.json())
     .then(data => {
-        console.log('data от сервера (отработка api.js)', data);
-        console.log('data.success от сервера (отработка api.js)', data.success);
         if (dispatcher) {
-            const dispatchData = successData ? data.success : data;
-            store.dispatch(dispatcher(dispatchData));
+            store.dispatch(dispatcher(data));
         }
         if (api_request) {
             api_request();
@@ -37,13 +34,12 @@ export const commonAPI = (api, action, body = {}, dispatcher = null, api_request
     .catch(error => console.error('API error:', error));
 }
 
-
 export const API_getText = () => {
-    commonAPI('text', 'get', {}, act_setText, null, true);
+    commonAPI('text', 'get', {}, act_setText, null);
 }
 
 export const API_insertText = (text) => {
-    commonAPI('text', 'insert', { text }, null, API_getText, true);
+    commonAPI('text', 'insert', { text }, null, API_getText);
 }
 
 export const API_getMessages = () => {
@@ -83,28 +79,6 @@ export const API_deleteMessage = (id) => {
 //         console.log('get data from server')
 //         console.log(data)
 //         store.dispatch(act_setText(data.success)); 
-//     })
-//     .catch(error => console.error(error));
-// }
-
-
-
-
-// export const API_insertText = (text) => {
-//     fetch('http://localhost:3030/api/text', 
-//         {
-//             ...options,
-//             body: JSON.stringify({ 
-//                 action: 'insert',
-//                 text: text
-//             })
-//         }
-//     )
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('get data from server')
-//         console.log(data)
-//         API_getText()
 //     })
 //     .catch(error => console.error(error));
 // }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Modal, Form } from 'react-bootstrap';
-import { API_deleteMessage, API_insertMessage, API_updateMessage, API_getMessages } from 'path_services/api';
+import { API_deleteMessage, API_insertMessage, API_updateMessage } from 'path_services/api';
 
 function RIGHT(props) {
     // insert
