@@ -24,8 +24,10 @@ export const commonAPI = (api, action, body = {}, dispatcher = null, api_request
     })
     .then(response => response.json())
     .then(data => {
+        // console.log('data:', data)
+        // console.log('data.success:', data.success)
         if (dispatcher) {
-            store.dispatch(dispatcher(data));
+            store.dispatch(dispatcher(data.success));
         }
         if (api_request) {
             api_request();
