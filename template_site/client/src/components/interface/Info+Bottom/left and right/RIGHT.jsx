@@ -17,6 +17,7 @@ function RIGHT(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log('Добавлено сообщение', messageText);
         API_insertMessage(messageText);
         setMessageText('');
         closeInsertModal();
@@ -44,6 +45,7 @@ function RIGHT(props) {
     };
 
     const handlerClick_delete = (id) => {
+        console.log(`Удаляем с ID ${id}`);
         API_deleteMessage(id);
     }
 

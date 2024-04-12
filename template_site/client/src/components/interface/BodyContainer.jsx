@@ -8,7 +8,7 @@ function BodyContainer(props) {
     return (
         <div className="body-container d-flex flex-column justify-content-center align-items-center vh-100 overflow-auto">
             <Info />
-            <Bottom />
+            {/* <Bottom /> */}
         </div>
     );
 }

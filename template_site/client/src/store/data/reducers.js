@@ -17,6 +17,7 @@ const defaultState = {
 export const dataReducer = (state = defaultState, action) => {
     switch (action.type) {
         case SET_TEXT:
+            // console.log(action)
             return {
                 ...state,
                 mytext: action.payload
@@ -52,6 +53,8 @@ export const dataReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 messages: state.messages.filter(msg => msg.id !== action.payload.id),
+                current_message: null,
+
             };
 
         default: return state
