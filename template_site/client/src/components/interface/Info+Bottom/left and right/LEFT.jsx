@@ -7,15 +7,12 @@ import {
 } from 'path_services/api';
 
 function LEFT (props) {
-    const [selectedId, setSelectedId] = useState(null);
-
     useEffect(() => {
         API_getMessages();
     }, []);
     
     const handlerClick = (id) => {
         console.log(`Message with ID ${id} was clicked.`);
-        setSelectedId(id);
         API_getMessageForId(id);
     }
     
@@ -37,7 +34,7 @@ function LEFT (props) {
                             border: '1px solid black', 
                             marginBottom: '5px', 
                             borderRadius: '5px', 
-                            backgroundColor: selectedId === msg.id ? 'green' : 'white',
+                            backgroundColor: props.current_id === msg.id ? 'green' : 'white',
                             display: 'block', 
                             width: '100%', 
                             textAlign: 'left' 
@@ -55,7 +52,8 @@ function LEFT (props) {
 //props
 const mapStateToProps = (state) => {
     return {
-        messages: state.allData.data.messages,
+        messages: state.allData.messages,
+        current_id: state.allData.current_id,
     }
 }
 
