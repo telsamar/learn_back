@@ -108,9 +108,9 @@ function RIGHT(props) {
 //props
 const mapStateToProps = (state) => {
     return {
-        current_message: state.allData.current_message,
-        current_id: state.allData.current_id,
-        messages: state.allData.messages,
+        current_message: state.allData.data.current_message,
+        current_id: state.allData.data.current_id,
+        messages: state.allData.data.messages,
     }
 }
 

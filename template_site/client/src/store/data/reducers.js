@@ -8,55 +8,77 @@ import {
 } from './actions'
 
 const defaultState = {
-    mytext: 'Текст из state. Приступил к изменению сайта',
-    messages: [],
-    current_id: -1,
-    current_message: null,
+    data: 
+        {
+        mytext: 'Текст из state. Приступил к изменению сайта',
+        messages: [],
+        current_id: -1,
+        current_message: null,
+        },
+    interface:
+        {
+
+        }
 }
 
 export const dataReducer = (state = defaultState, action) => {
     switch (action.type) {
         case SET_TEXT:
-            // console.log(action)
             return {
                 ...state,
-                mytext: action.payload
+                data: {
+                    ...state.data,
+                    mytext: action.payload
+                }
             };
         case SET_MESSAGES:
             return {
                 ...state,
-                messages: action.payload
+                data: {
+                    ...state.data,
+                    messages: action.payload
+                }
             };
         case SET_CURRENT_MESSAGE:
             return {
                 ...state,
-                current_id: action.payload.id,
-                current_message: action.payload.message,
+                data: {
+                    ...state.data,
+                    current_id: action.payload.id,
+                    current_message: action.payload.message,
+                }
             };
         case INSERT_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, action.payload],
+                data: {
+                    ...state.data,
+                    messages: [...state.data.messages, action.payload],
+                }
             };
         case UPDATE_MESSAGE:
             return {
                 ...state,
-                messages: state.messages.map(msg =>
-                    msg.id === action.payload.id ? { ...msg, message: action.payload.message } : msg
-                ),
-                current_message: state.messages.find(msg => msg.id === action.payload.id)
-                        ? action.payload.message
-                        : state.current_message
+                data: {
+                    ...state.data,
+                    messages: state.data.messages.map(msg =>
+                        msg.id === action.payload.id ? { ...msg, message: action.payload.message } : msg
+                    ),
+                    current_message: state.data.messages.find(msg => msg.id === action.payload.id)
+                            ? action.payload.message
+                            : state.data.current_message
+                }
             };
-
         case DELETE_MESSAGE:
             return {
                 ...state,
-                messages: state.messages.filter(msg => msg.id !== action.payload.id),
-                current_message: null,
-
+                data: {
+                    ...state.data,
+                    messages: state.data.messages.filter(msg => msg.id !== action.payload.id),
+                    current_message: null,
+                }
             };
-
-        default: return state
+        default:
+            return state;
     }
-}
+};

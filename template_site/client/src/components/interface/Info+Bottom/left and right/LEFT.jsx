@@ -55,7 +55,7 @@ function LEFT (props) {
 //props
 const mapStateToProps = (state) => {
     return {
-        messages: state.allData.messages,
+        messages: state.allData.data.messages,
     }
 }
 
