@@ -13,8 +13,8 @@ let arrMessages = [
 // getMessages
 const getMessages = async (req, res) => {
     res.status(200).json({ success: arrMessages });
+    console.log('Успешно отработано getMessages')
 };
-
 
 // insertMessage
 const insertMessage = async (req, res) => {
@@ -26,8 +26,8 @@ const insertMessage = async (req, res) => {
     };
     arrMessages.push(newMessage);
     res.status(201).json({ success: newMessage });
+    console.log('Успешно отработано insertMessage')
 };
-
 
 // updateMessage
 const updateMessage = async (req, res) => {
@@ -39,34 +39,33 @@ const updateMessage = async (req, res) => {
     } else {
         res.status(404).json({ error: 'Сообщение не найдено' });
     }
+    console.log('Успешно отработано updateMessage')
 };
-
 
 // deleteMessage
 const deleteMessage = async (req, res) => {
-    const { id } = req.body;
-    const messageIndex = arrMessages.findIndex(msg => msg.id === parseInt(id, 10));
+    const { id } = req.body; 
+    const messageIndex = arrMessages.findIndex(msg => msg.id === id);
     if (messageIndex > -1) {
         arrMessages.splice(messageIndex, 1);
         res.status(200).json({ success: { message: 'Сообщение удалено', id } });
     } else {
         res.status(404).json({ error: 'Сообщение не найдено' });
     }
+    console.log('Успешно отработано deleteMessage')
 };
-
 
 // getMessageForId
 const getMessageForId = async (req, res) => {
     const { id } = req.body;
-    const message = arrMessages.find(msg => msg.id === parseInt(id));
+    const message = arrMessages.find(msg => msg.id === id);
     if (message) {
         res.status(200).json({ success: message });
     } else {
         res.status(404).json({ error: 'Сообщение не найдено' });
     }
+    console.log('Успешно отработано getMessageForId')
 };
-
-
 
 exports.cntr_message = async function(req, res) {
     const action = req.body.action;

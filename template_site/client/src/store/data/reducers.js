@@ -48,13 +48,11 @@ export const dataReducer = (state = defaultState, action) => {
                         ? action.payload.message
                         : state.current_message
             };
-
         case DELETE_MESSAGE:
             return {
                 ...state,
                 messages: state.messages.filter(msg => msg.id !== action.payload.id),
                 current_message: null,
-
             };
 
         default: return state

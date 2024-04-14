@@ -28,17 +28,23 @@ export const act_setMessageById = (message) => (
     }
 );
 
-export const act_insertMessage = (message) => ({
+export const act_insertMessage = (message) => (
+    {
     type: INSERT_MESSAGE,
     payload: message,
-});
+    }
+);
 
-export const act_updateMessage = (message) => ({
+export const act_updateMessage = (message) => (
+    {
     type: UPDATE_MESSAGE,
     payload: message,
-});
+    }
+);
 
-export const act_deleteMessage = (id) => ({
+export const act_deleteMessage = (id) => (
+    {
     type: DELETE_MESSAGE,
     payload: id,
-});
+    }
+);

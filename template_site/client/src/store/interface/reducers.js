@@ -2,17 +2,18 @@ import {
     OPEN_INSERT_MODAL, 
     CLOSE_INSERT_MODAL,
     OPEN_EDIT_MODAL,
-    CLOSE_EDIT_MODAL
+    CLOSE_EDIT_MODAL,
+    SET_MESSAGE_TEXT,
+    CLEAR_MESSAGE_TEXT
 } from './actions'
 
-const defaultState = {
+export const initialInterfaceState = {
     insertModalOpen: false,
     editModalOpen: false,
-    editingId: null,
-    editingMessage: ''
+    messageText: ''
 };
 
-export const interfaceReducer = (state = defaultState, action) => {
+export const interfaceReducer = (state = initialInterfaceState, action) => {
     switch (action.type) {
         case OPEN_INSERT_MODAL:
             return {
@@ -27,16 +28,22 @@ export const interfaceReducer = (state = defaultState, action) => {
         case OPEN_EDIT_MODAL:
             return {
                 ...state,
-                editModalOpen: true,
-                editingId: action.payload.id,
-                editingMessage: action.payload.message
+                editModalOpen: true
             };
         case CLOSE_EDIT_MODAL:
             return {
                 ...state,
-                editModalOpen: false,
-                editingId: null,
-                editingMessage: ''
+                editModalOpen: false
+            };
+        case SET_MESSAGE_TEXT:
+            return {
+                ...state,
+                messageText: action.payload
+            };
+        case CLEAR_MESSAGE_TEXT:
+            return {
+                ...state,
+                messageText: ''
             };
         default:
             return state;
