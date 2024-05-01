@@ -21,6 +21,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION get_message_by_id(p_message_id INTEGER)
+RETURNS TABLE(id INTEGER, message TEXT) AS $$
+BEGIN
+    RETURN QUERY SELECT messages.id, messages.message FROM messages WHERE messages.id = p_message_id;
+END;
+$$ LANGUAGE plpgsql;
+
+
 
 
 

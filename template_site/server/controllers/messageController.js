@@ -69,15 +69,31 @@ const deleteMessage = async (req, res) => {
 };
 
 // getMessageForId
+// const getMessageForId = async (req, res) => {
+//     const { id } = req.body;
+//     const message = arrMessages.find(msg => msg.id === id);
+//     if (message) {
+//         res.status(200).json({ success: message });
+//     } else {
+//         res.status(404).json({ error: 'Сообщение не найдено' });
+//     }
+//     console.log('Успешно отработано getMessageForId')
+// };
+
 const getMessageForId = async (req, res) => {
-    const { id } = req.body;
-    const message = arrMessages.find(msg => msg.id === id);
-    if (message) {
-        res.status(200).json({ success: message });
-    } else {
-        res.status(404).json({ error: 'Сообщение не найдено' });
+    try {
+        const { id } = req.body;
+        const message = await db.getMessageById(id);
+        if (message) {
+            res.status(200).json({ success: message });
+        } else {
+            res.status(404).json({ error: 'Сообщение не найдено в базе данных' });
+        }
+        console.log('Успешно отработано getMessageForId через базу данных');
+    } catch (error) {
+        console.error('Ошибка при получении сообщения через базу данных:', error);
+        res.status(500).json({ error: 'Внутренняя ошибка сервера' });
     }
-    console.log('Успешно отработано getMessageForId')
 };
 
 exports.cntr_message = async function(req, res) {

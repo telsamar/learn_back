@@ -39,8 +39,16 @@ const getMessages = async () => {
     }
 };
 
+const getMessageById = async (id) => {
+    const query = 'SELECT * FROM get_message_by_id($1)';
+    const { rows } = await pool.query(query, [id]);
+    return rows.length ? rows[0] : null;
+};
+
+
 module.exports = {
-    getMessages
+    getMessages,
+    getMessageById,
 };
 
 
