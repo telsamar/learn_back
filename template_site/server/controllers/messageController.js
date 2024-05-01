@@ -1,3 +1,5 @@
+const db = require('../services/db');
+
 let arrMessages = [
     {id:1, message: 'message 1'},
     {id:2, message: 'message 22'},
@@ -11,9 +13,20 @@ let arrMessages = [
 ];
 
 // getMessages
+// const getMessages = async (req, res) => {
+//     res.status(200).json({ success: arrMessages });
+//     console.log('Успешно отработано getMessages')
+// };
+
 const getMessages = async (req, res) => {
-    res.status(200).json({ success: arrMessages });
-    console.log('Успешно отработано getMessages')
+    try {
+        const messages = await db.getMessages();
+        res.status(200).json({ success: messages });
+        console.log('Успешно отработано getMessages через базу данных')
+    } catch (error) {
+        res.status(500).json({ error: 'Ошибка сервера' });
+        console.log('Ошибка при получении сообщений через базу данных', error);
+    }
 };
 
 // insertMessage
