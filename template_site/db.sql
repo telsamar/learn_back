@@ -15,9 +15,11 @@ INSERT INTO messages (message) VALUES
 ('message 999999999');
 
 CREATE OR REPLACE FUNCTION get_all_messages()
-RETURNS TABLE(id INTEGER, message TEXT) AS $$
+RETURNS TABLE(j json) AS $$
 BEGIN
-    RETURN QUERY SELECT messages.id, messages.message FROM messages;
+    RETURN QUERY SELECT row_to_json(a) FROM (
+        SELECT messages.id, messages.message FROM messages ORDER BY id
+    ) AS a;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -28,6 +30,45 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION insert_message(message_text TEXT)
+RETURNS json AS $$
+DECLARE
+    new_id INTEGER;
+    new_message RECORD;
+BEGIN
+    INSERT INTO messages (message) VALUES (message_text) RETURNING id INTO new_id;
+    SELECT id, message INTO new_message FROM messages WHERE id = new_id;
+    RETURN row_to_json(new_message);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION delete_message(p_message_id INTEGER)
+RETURNS json AS $$
+DECLARE
+    deleted_message RECORD;
+BEGIN
+    DELETE FROM messages WHERE id = p_message_id RETURNING * INTO deleted_message;
+    IF found THEN
+        RETURN json_build_object('success', json_build_object('message', 'Сообщение удалено', 'id', deleted_message.id));
+    ELSE
+        RETURN json_build_object('error', 'Сообщение не найдено');
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION update_message(p_message_id INTEGER, p_message_text TEXT)
+RETURNS json AS $$
+DECLARE
+    updated_message RECORD;
+BEGIN
+    UPDATE messages SET message = p_message_text WHERE id = p_message_id RETURNING * INTO updated_message;
+    IF found THEN
+        RETURN json_build_object('success', row_to_json(updated_message));
+    ELSE
+        RETURN json_build_object('error', 'Сообщение не найдено');
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
 
 
 

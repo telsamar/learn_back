@@ -30,42 +30,87 @@ const getMessages = async (req, res) => {
 };
 
 // insertMessage
+// const insertMessage = async (req, res) => {
+//     const { message } = req.body;
+//     const newId = arrMessages.length > 0 ? arrMessages[arrMessages.length - 1].id + 1 : 1;
+//     const newMessage = {
+//         id: newId,
+//         message: message,
+//     };
+//     arrMessages.push(newMessage);
+//     res.status(201).json({ success: newMessage });
+//     console.log('Успешно отработано insertMessage')
+// };
+
 const insertMessage = async (req, res) => {
-    const { message } = req.body;
-    const newId = arrMessages.length > 0 ? arrMessages[arrMessages.length - 1].id + 1 : 1;
-    const newMessage = {
-        id: newId,
-        message: message,
-    };
-    arrMessages.push(newMessage);
-    res.status(201).json({ success: newMessage });
-    console.log('Успешно отработано insertMessage')
+    try {
+        const { message } = req.body;
+        const newMessage = await db.insertMessage(message);
+        res.status(201).json({ success: newMessage });
+        console.log('Успешно отработано insertMessage через базу данных');
+    } catch (error) {
+        console.error('Ошибка при вставке сообщения:', error);
+        res.status(500).json({ error: 'Внутренняя ошибка сервера ' });
+    }
 };
 
 // updateMessage
+// const updateMessage = async (req, res) => {
+//     const { id, message } = req.body;
+//     const messageIndex = arrMessages.findIndex(msg => msg.id === id);
+//     if (messageIndex > -1) {
+//         arrMessages[messageIndex].message = message;
+//         res.status(200).json({ success: arrMessages[messageIndex] });
+//     } else {
+//         res.status(404).json({ error: 'Сообщение не найдено' });
+//     }
+//     console.log('Успешно отработано updateMessage')
+// };
+
 const updateMessage = async (req, res) => {
-    const { id, message } = req.body;
-    const messageIndex = arrMessages.findIndex(msg => msg.id === id);
-    if (messageIndex > -1) {
-        arrMessages[messageIndex].message = message;
-        res.status(200).json({ success: arrMessages[messageIndex] });
-    } else {
-        res.status(404).json({ error: 'Сообщение не найдено' });
+    try {
+        const { id, message } = req.body;
+        const result = await db.updateMessage(id, message);
+        if (result.success) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json(result);
+        }
+        console.log('Успешно отработано updateMessage через базу данных');
+    } catch (error) {
+        console.error('Ошибка при обновлении сообщения:', error);
+        res.status(500).json({ error: 'Внутренняя ошибка сервера' });
     }
-    console.log('Успешно отработано updateMessage')
 };
 
+
 // deleteMessage
+// const deleteMessage = async (req, res) => {
+//     const { id } = req.body; 
+//     const messageIndex = arrMessages.findIndex(msg => msg.id === id);
+//     if (messageIndex > -1) {
+//         arrMessages.splice(messageIndex, 1);
+//         res.status(200).json({ success: { message: 'Сообщение удалено', id } });
+//     } else {
+//         res.status(404).json({ error: 'Сообщение не найдено' });
+//     }
+//     console.log('Успешно отработано deleteMessage')
+// };
+
 const deleteMessage = async (req, res) => {
-    const { id } = req.body; 
-    const messageIndex = arrMessages.findIndex(msg => msg.id === id);
-    if (messageIndex > -1) {
-        arrMessages.splice(messageIndex, 1);
-        res.status(200).json({ success: { message: 'Сообщение удалено', id } });
-    } else {
-        res.status(404).json({ error: 'Сообщение не найдено' });
+    try {
+        const { id } = req.body;
+        const result = await db.deleteMessage(id);
+        if (result.success) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json(result);
+        }
+        console.log('Успешно отработано deleteMessage через базу данных');
+    } catch (error) {
+        console.error('Ошибка при удалении сообщения:', error);
+        res.status(500).json({ error: 'Внутренняя ошибка сервера' });
     }
-    console.log('Успешно отработано deleteMessage')
 };
 
 // getMessageForId

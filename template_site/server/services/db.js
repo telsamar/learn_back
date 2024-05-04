@@ -22,7 +22,7 @@ pool.connect((err, client, release) => {
     client.query('SELECT NOW()', (err, result) => {
         release();
         if (err) {
-            console.error('Ошибка при выполнении запроса', err.stack);
+            console.error('Ошибка при выполнении запроса к базам данных', err.stack);
             return;
         }
         console.log('Время сервера:', result.rows[0].now);
@@ -31,8 +31,8 @@ pool.connect((err, client, release) => {
 
 const getMessages = async () => {
     try {
-        const { rows } = await pool.query('SELECT * FROM get_all_messages()');
-        return rows;
+        const { rows } = await pool.query('SELECT get_all_messages() AS message');
+        return rows.map(row => row.message);
     } catch (error) {
         console.error('Ошибка при получении сообщений:', error);
         throw error;
@@ -40,15 +40,36 @@ const getMessages = async () => {
 };
 
 const getMessageById = async (id) => {
-    const query = 'SELECT * FROM get_message_by_id($1)';
+    const query = 'SELECT id, message FROM get_message_by_id($1)';
     const { rows } = await pool.query(query, [id]);
     return rows.length ? rows[0] : null;
+};
+
+const insertMessage = async (messageText) => {
+    const query = 'SELECT insert_message($1) AS new_message';
+    const { rows } = await pool.query(query, [messageText]);
+    return rows[0].new_message;
+};
+
+const deleteMessage = async (messageId) => {
+    const query = 'SELECT delete_message($1) AS result';
+    const { rows } = await pool.query(query, [messageId]);
+    return rows[0].result;
+};
+
+const updateMessage = async (messageId, messageText) => {
+    const query = 'SELECT update_message($1, $2) AS result';
+    const { rows } = await pool.query(query, [messageId, messageText]);
+    return rows[0].result;
 };
 
 
 module.exports = {
     getMessages,
     getMessageById,
+    insertMessage,
+    deleteMessage,
+    updateMessage,
 };
 
 
