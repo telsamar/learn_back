@@ -36,11 +36,12 @@ DECLARE
     new_id INTEGER;
     new_message RECORD;
 BEGIN
-    INSERT INTO messages (message) VALUES (message_text) RETURNING id INTO new_id;
-    SELECT id, message INTO new_message FROM messages WHERE id = new_id;
+    SELECT COALESCE(MAX(id), 0) + 1 INTO new_id FROM messages;
+    INSERT INTO messages (id, message) VALUES (new_id, message_text) RETURNING id, message INTO new_message;
     RETURN row_to_json(new_message);
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION delete_message(p_message_id INTEGER)
 RETURNS json AS $$
