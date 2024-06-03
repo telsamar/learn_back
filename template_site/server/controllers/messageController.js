@@ -71,10 +71,10 @@ const updateMessage = async (req, res) => {
     try {
         const { id, message } = req.body;
         const result = await db.updateMessage(id, message);
-        if (result.success) {
-            res.status(200).json(result);
+        if (result && result.id) {
+            res.status(200).json({ success: result });
         } else {
-            res.status(404).json(result);
+            res.status(404).json({ error: 'Сообщение не найдено' });
         }
         console.log('Успешно отработано updateMessage через базу данных');
     } catch (error) {
@@ -82,7 +82,6 @@ const updateMessage = async (req, res) => {
         res.status(500).json({ error: 'Внутренняя ошибка сервера' });
     }
 };
-
 
 // deleteMessage
 // const deleteMessage = async (req, res) => {
@@ -101,10 +100,10 @@ const deleteMessage = async (req, res) => {
     try {
         const { id } = req.body;
         const result = await db.deleteMessage(id);
-        if (result.success) {
-            res.status(200).json(result);
+        if (result && result.id) {
+            res.status(200).json({ success: { message: 'Сообщение удалено', id: result.id } });
         } else {
-            res.status(404).json(result);
+            res.status(404).json({ error: 'Сообщение не найдено' });
         }
         console.log('Успешно отработано deleteMessage через базу данных');
     } catch (error) {
@@ -129,7 +128,7 @@ const getMessageForId = async (req, res) => {
     try {
         const { id } = req.body;
         const message = await db.getMessageById(id);
-        if (message) {
+        if (message && message.id) {
             res.status(200).json({ success: message });
         } else {
             res.status(404).json({ error: 'Сообщение не найдено в базе данных' });

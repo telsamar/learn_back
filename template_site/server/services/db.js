@@ -40,9 +40,9 @@ const getMessages = async () => {
 };
 
 const getMessageById = async (id) => {
-    const query = 'SELECT id, message FROM get_message_by_id($1)';
+    const query = 'SELECT get_message_by_id($1) AS result';
     const { rows } = await pool.query(query, [id]);
-    return rows.length ? rows[0] : null;
+    return rows[0].result;
 };
 
 const insertMessage = async (messageText) => {
@@ -62,7 +62,6 @@ const updateMessage = async (messageId, messageText) => {
     const { rows } = await pool.query(query, [messageId, messageText]);
     return rows[0].result;
 };
-
 
 module.exports = {
     getMessages,

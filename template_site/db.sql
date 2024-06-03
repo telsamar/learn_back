@@ -3,6 +3,7 @@ CREATE TABLE messages (
     message TEXT NOT NULL
 );
 
+
 INSERT INTO messages (message) VALUES
 ('message 1'),
 ('message 22'),
@@ -14,6 +15,7 @@ INSERT INTO messages (message) VALUES
 ('message 88888888'),
 ('message 999999999');
 
+
 CREATE OR REPLACE FUNCTION get_all_messages()
 RETURNS TABLE(j json) AS $$
 BEGIN
@@ -23,12 +25,20 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
 CREATE OR REPLACE FUNCTION get_message_by_id(p_message_id INTEGER)
-RETURNS TABLE(id INTEGER, message TEXT) AS $$
+RETURNS json AS $$
+DECLARE
+    message_record RECORD;
 BEGIN
-    RETURN QUERY SELECT messages.id, messages.message FROM messages WHERE messages.id = p_message_id;
+    SELECT id, message INTO message_record
+    FROM messages
+    WHERE id = p_message_id;
+    
+    RETURN row_to_json(message_record);
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION insert_message(message_text TEXT)
 RETURNS json AS $$
@@ -48,28 +58,24 @@ RETURNS json AS $$
 DECLARE
     deleted_message RECORD;
 BEGIN
-    DELETE FROM messages WHERE id = p_message_id RETURNING * INTO deleted_message;
-    IF found THEN
-        RETURN json_build_object('success', json_build_object('message', 'Сообщение удалено', 'id', deleted_message.id));
-    ELSE
-        RETURN json_build_object('error', 'Сообщение не найдено');
-    END IF;
+    DELETE FROM messages m WHERE m.id = p_message_id
+    RETURNING m.* INTO deleted_message;
+    RETURN row_to_json(deleted_message);
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION update_message(p_message_id INTEGER, p_message_text TEXT)
 RETURNS json AS $$
 DECLARE
     updated_message RECORD;
 BEGIN
-    UPDATE messages SET message = p_message_text WHERE id = p_message_id RETURNING * INTO updated_message;
-    IF found THEN
-        RETURN json_build_object('success', row_to_json(updated_message));
-    ELSE
-        RETURN json_build_object('error', 'Сообщение не найдено');
-    END IF;
+    UPDATE messages SET message = p_message_text WHERE id = p_message_id
+    RETURNING * INTO updated_message;
+    RETURN row_to_json(updated_message);
 END;
 $$ LANGUAGE plpgsql;
+
 
 
 
